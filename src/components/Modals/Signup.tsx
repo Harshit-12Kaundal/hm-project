@@ -6,6 +6,7 @@ import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
 import { doc, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
+import { sendEmailVerification } from "firebase/auth";
 
 type SignupProps = {};
 
@@ -40,7 +41,10 @@ const Signup: React.FC<SignupProps> = () => {
 				starredProblems: [],
 			};
 			await setDoc(doc(firestore, "users", newUser.user.uid), userData);
-			router.push("/");
+			const verfiyit=sendEmailVerification(newUser.user);
+			if( await verfiyit){
+				router.push("/");
+			}
 		} catch (error: any) {
 			toast.error(error.message, { position: "top-center" });
 		} finally {
