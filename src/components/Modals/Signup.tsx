@@ -42,9 +42,7 @@ const Signup: React.FC<SignupProps> = () => {
 			};
 			await setDoc(doc(firestore, "users", newUser.user.uid), userData);
 			const verfiyit=sendEmailVerification(newUser.user);
-			if( await verfiyit){
-				router.push("/");
-			}
+			router.push("/");
 		} catch (error: any) {
 			toast.error(error.message, { position: "top-center" });
 		} finally {
